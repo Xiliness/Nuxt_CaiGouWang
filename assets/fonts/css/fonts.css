@@ -1,0 +1,8 @@
+/* https://fonts.googleapis.com/css2?family=Public+Sans&display=swap&text=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@%23$%25^%26*()_%2B-=%5B%5D%7B%7D|;:,.%3C%3E?%2F%E2%82%AC%E2%82%B9 */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('~assets/fonts/Public_Sans-normal-400-text.woff2') format('woff2');
+}
