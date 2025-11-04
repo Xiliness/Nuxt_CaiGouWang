@@ -34,6 +34,42 @@ const selectedTab = ref('all')
  */
 const { data: mails } = await useFetch<Mail[]>('/api/caigougonggao', { default: () => [] })
 
+// 在获取到邮件数据后，恢复已读状态
+onBeforeMount(() => {
+  restoreReadStatus()
+})
+
+/**
+ * 恢复邮件的已读状态
+ * 从localStorage中读取已读邮件ID列表，并更新当前邮件状态
+ */
+function restoreReadStatus() {
+  const readMailIds = JSON.parse(localStorage.getItem('caigougonggao_read_mails') || '[]')
+  mails.value.forEach((mail) => {
+    if (readMailIds.includes(mail.id)) {
+      mail.unread = false
+    }
+  })
+}
+
+/**
+ * 保存已读状态到localStorage
+ * @param mailId 邮件ID
+ * @param unread 是否未读
+ */
+function saveReadStatus(mailId: number, unread: boolean) {
+  const readMailIds = JSON.parse(localStorage.getItem('caigougonggao_read_mails') || '[]')
+  const readMailIdIndex = readMailIds.indexOf(mailId)
+  if (!unread && readMailIdIndex === -1) {
+    // 标记为已读，添加到已读列表
+    readMailIds.push(mailId)
+  } else if (unread && readMailIdIndex !== -1) {
+    // 标记为未读，从已读列表中移除
+    readMailIds.splice(readMailIdIndex, 1)
+  }
+  localStorage.setItem('caigougonggao_read_mails', JSON.stringify(readMailIds))
+}
+
 /**
  * 更新指定公告的已读状态
  * @param mailId 公告ID
@@ -43,6 +79,7 @@ function updateMailStatus(mailId: number, unread: boolean) {
   const mail = mails.value.find(m => m.id === mailId)
   if (mail) {
     mail.unread = unread
+    saveReadStatus(mailId, unread)
   }
 }
 
