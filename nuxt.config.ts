@@ -28,5 +28,12 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+
+  // 添加GitHub Pages部署配置
+  app: {
+    baseURL: process.env.NODE_ENV === 'production'
+      ? '/Nuxt_CaiGouWang/'// 使用你的仓库名称
+      : '/'
   }
 })
