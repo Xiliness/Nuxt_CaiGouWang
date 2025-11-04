@@ -10,6 +10,13 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  // 添加GitHub Pages部署配置
+  app: {
+    baseURL: import.meta.env.NODE_ENV === 'production'
+      ? '/Nuxt_CaiGouWang/'// 使用你的仓库名称
+      : '/'
+  },
+
   css: ['~/assets/css/main.css'],
 
   routeRules: {
@@ -28,12 +35,5 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
-  },
-
-  // 添加GitHub Pages部署配置
-  app: {
-    baseURL: process.env.NODE_ENV === 'production'
-      ? '/Nuxt_CaiGouWang/'// 使用你的仓库名称
-      : '/'
   }
 })
